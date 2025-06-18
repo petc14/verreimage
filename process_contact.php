@@ -11,7 +11,7 @@
 
 // Inclure la configuration de base pour accéder aux sessions et fonctions
 require_once 'config/init.php';
-require_once 'includes/fonctions.php';
+require_once 'src/functions.php';
 
 // Initialisation des variables pour les messages
 $_SESSION['errors'] = [];

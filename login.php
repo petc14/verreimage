@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 // Inclure l'en-tête du site
-require_once 'templates/header.php';
+require_once 'src/templates/header.php';
 ?>
 
 <style>
@@ -179,5 +179,5 @@ require_once 'templates/header.php';
 
 <?php
 // Inclure le pied de page
-require_once 'templates/footer.php';
+require_once 'src/templates/footer.php';
 ?>

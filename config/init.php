@@ -44,12 +44,12 @@ require_once __DIR__ . '/database.php';
 /**
  * Inclusion du fichier contenant les fonctions utilitaires.
  */
-require_once __DIR__ . '/../includes/fonctions.php';
+require_once __DIR__ . '/../src/functions.php';
 
 /**
  * Inclusion du fichier de gestion du panier.
  */
-require_once __DIR__ . '/../includes/panier.php';
+require_once __DIR__ . '/../src/cart.php';
 
 
 // --- Constantes Globales du Site ---
@@ -65,6 +65,10 @@ define('SITE_NAME', 'Verre & Image');
  * Très important pour construire des liens absolus pour les CSS, JS, images et liens de navigation.
  * Adaptez cette URL si votre site n'est pas à la racine de localhost.
  */
-define('BASE_URL', 'http://localhost/verre-image-site/');
+// Détermine dynamiquement l'URL de base selon l'environnement
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+$host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+$path = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
+define('BASE_URL', $protocol . $host . ($path ? $path . '/' : '/'));
 
 ?>

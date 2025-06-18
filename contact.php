@@ -22,7 +22,7 @@ $success_message = $_SESSION['success_message'] ?? '';
 unset($_SESSION['errors'], $_SESSION['inputs'], $_SESSION['success_message']);
 
 // Inclure l'en-tête du site
-require_once 'templates/header.php';
+require_once 'src/templates/header.php';
 ?>
 
 <style>
@@ -158,5 +158,5 @@ require_once 'templates/header.php';
 
 <?php
 // Inclure le pied de page
-require_once 'templates/footer.php';
+require_once 'src/templates/footer.php';
 ?>

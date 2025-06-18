@@ -9,7 +9,7 @@
  */
 
 // Inclut la configuration de base (session, BDD, constantes)
-require_once __DIR__ . '/../config/init.php'; 
+require_once __DIR__ . '/../../config/init.php';
 
 // --- Gestion du SEO de la page ---
 // Le titre et la description peuvent être définis dans chaque page avant d'inclure ce header.

@@ -13,7 +13,7 @@ $page_description = "Merci pour votre commande. Retrouvez ici le récapitulatif 
 
 // Inclure l'initialisation et les fonctions
 require_once 'config/init.php';
-require_once 'includes/panier.php';
+require_once 'src/cart.php';
 
 // Simuler la récupération des informations de la dernière commande depuis la session
 // Dans une application réelle, ces informations viendraient de la base de données après le paiement.
@@ -43,7 +43,7 @@ clear_cart();
 
 
 // Inclure l'en-tête
-require_once 'templates/header.php';
+require_once 'src/templates/header.php';
 ?>
 
 <style>
@@ -129,5 +129,5 @@ require_once 'templates/header.php';
 
 <?php
 // Inclure le pied de page
-require_once 'templates/footer.php';
+require_once 'src/templates/footer.php';
 ?>

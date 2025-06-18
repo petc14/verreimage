@@ -12,7 +12,7 @@ $page_description = "Choisissez votre mode de paiement sécurisé pour finaliser
 
 // Inclure l'initialisation et les fonctions
 require_once 'config/init.php';
-require_once 'includes/panier.php';
+require_once 'src/cart.php';
 
 // Vérifier si l'utilisateur vient bien de la page de commande
 if (!isset($_SESSION['checkout_data'])) {
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_method'])) {
 }
 
 // Inclure l'en-tête
-require_once 'templates/header.php';
+require_once 'src/templates/header.php';
 ?>
 
 <style>
@@ -151,5 +151,5 @@ require_once 'templates/header.php';
 
 <?php
 // Inclure le pied de page
-require_once 'templates/footer.php';
+require_once 'src/templates/footer.php';
 ?>

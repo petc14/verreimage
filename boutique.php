@@ -12,7 +12,7 @@ $page_title = "Boutique - Nos Modèles de Plaques";
 $page_description = "Découvrez tous nos thèmes de plaques funéraires personnalisables. Choisissez un modèle et commencez la création d'un hommage unique.";
 
 // Inclut l'en-tête commun à toutes les pages
-require_once 'templates/header.php';
+require_once 'src/templates/header.php';
 
 // La fonction get_background_catalogue() est maintenant disponible grâce au fichier init.php
 // qui est lui-même inclus dans le header.php.
@@ -138,5 +138,5 @@ $catalogue_themes = get_background_catalogue();
 
 <?php
 // Inclut le pied de page commun à toutes les pages
-require_once 'templates/footer.php';
+require_once 'src/templates/footer.php';
 ?>

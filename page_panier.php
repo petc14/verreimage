@@ -12,9 +12,9 @@ $page_description = "Consultez le récapitulatif de votre création de plaque pe
 
 // Inclure l'initialisation et les fonctions de base
 require_once 'config/init.php';
-require_once 'includes/fonctions.php';
+require_once 'src/functions.php';
 // Inclure les fonctions spécifiques au panier
-require_once 'includes/panier.php';
+require_once 'src/cart.php';
 
 // Gérer la suppression d'un article
 if (isset($_GET['remove']) && !empty($_GET['remove'])) {
@@ -31,7 +31,7 @@ $cart_total = get_cart_total();
 $cart_count = get_cart_items_count();
 
 // Inclure l'en-tête
-require_once 'templates/header.php';
+require_once 'src/templates/header.php';
 ?>
 
 <style>
@@ -174,5 +174,5 @@ require_once 'templates/header.php';
 
 <?php
 // Inclure le pied de page
-require_once 'templates/footer.php';
+require_once 'src/templates/footer.php';
 ?>
