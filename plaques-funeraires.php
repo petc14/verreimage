@@ -12,13 +12,13 @@ $page_description = "Découvrez tous nos thèmes de plaques funéraires personna
 
 // Inclure l'initialisation et les fonctions
 require_once 'config/init.php';
-require_once 'includes/fonctions.php';
+require_once 'src/functions.php';
 
 // Récupère le catalogue des fonds depuis les dossiers d'images
 $catalogue_themes = get_background_catalogue();
 
 // Inclure l'en-tête commun
-require_once 'templates/header.php';
+require_once 'src/templates/header.php';
 ?>
 
 <style>
@@ -205,5 +205,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <?php
 // Inclure le pied de page
-require_once 'templates/footer.php';
+require_once 'src/templates/footer.php';
 ?>

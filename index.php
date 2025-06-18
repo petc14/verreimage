@@ -11,7 +11,7 @@ $page_title = "Accueil - Plaques Funéraires Personnalisées en Verre";
 $page_description = "Créez un hommage unique avec nos plaques funéraires en verre personnalisées. Fabrication française, qualité garantie 30 ans. Découvrez nos modèles.";
 
 // Inclut l'en-tête commun à toutes les pages
-require_once 'templates/header.php';
+require_once 'src/templates/header.php';
 ?>
 
 <style>
@@ -155,5 +155,5 @@ require_once 'templates/header.php';
 
 <?php
 // Inclut le pied de page commun
-require_once 'templates/footer.php';
+require_once 'src/templates/footer.php';
 ?>

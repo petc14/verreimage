@@ -13,7 +13,7 @@ $page_description = "Renseignez vos informations de livraison et de facturation 
 // Inclure l'initialisation (session, BDD, fonctions de base)
 require_once 'config/init.php';
 // Inclure les fonctions de gestion du panier
-require_once 'includes/panier.php';
+require_once 'src/cart.php';
 
 // Rediriger vers la page panier si le panier est vide
 if (get_cart_items_count() === 0) {
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 // Inclure l'en-tête du site
-require_once 'templates/header.php';
+require_once 'src/templates/header.php';
 ?>
 
 <style>
@@ -218,5 +218,5 @@ require_once 'templates/header.php';
 
 <?php
 // Inclure le pied de page
-require_once 'templates/footer.php';
+require_once 'src/templates/footer.php';
 ?>

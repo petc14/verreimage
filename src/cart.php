@@ -5,7 +5,7 @@
  * Ce fichier contient un ensemble de fonctions pour gérer le panier d'achat
  * en utilisant les sessions PHP. Il permet d'ajouter, modifier, supprimer
  * et consulter les articles du panier.
- * Il doit être placé dans le dossier /includes/
+ * Il est placé dans le dossier /src/ pour centraliser la logique
  */
 
 // S'assurer que le fichier est inclus et non accédé directement

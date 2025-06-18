@@ -11,7 +11,7 @@ $page_title = "Notre Savoir-Faire - L'Excellence du Verre";
 $page_description = "Découvrez notre procédé breveté d'impression sur verre, notre fabrication 100% française et notre garantie de 30 ans. L'artisanat au service de l'hommage.";
 
 // Inclure l'en-tête commun à toutes les pages
-require_once 'templates/header.php';
+require_once 'src/templates/header.php';
 ?>
 
 <style>
@@ -144,5 +144,5 @@ require_once 'templates/header.php';
 
 <?php
 // Inclure le pied de page
-require_once 'templates/footer.php';
+require_once 'src/templates/footer.php';
 ?>

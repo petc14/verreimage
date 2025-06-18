@@ -12,7 +12,7 @@ $page_description = "Découvrez la qualité et l'émotion de nos plaques funéra
 
 // Inclure l'initialisation et les fonctions de base
 require_once 'config/init.php';
-require_once 'includes/fonctions.php';
+require_once 'src/functions.php';
 
 // --- Logique pour récupérer les images de la galerie ---
 /**
@@ -42,7 +42,7 @@ function get_gallery_images(string $dir = 'IMAGES/realisations'): array {
 $gallery_images = get_gallery_images();
 
 // Inclure l'en-tête
-require_once 'templates/header.php';
+require_once 'src/templates/header.php';
 ?>
 
 <style>
@@ -154,5 +154,5 @@ require_once 'templates/header.php';
 
 <?php
 // Inclure le pied de page
-require_once 'templates/footer.php';
+require_once 'src/templates/footer.php';
 ?>
