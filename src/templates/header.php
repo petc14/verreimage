@@ -58,9 +58,9 @@ $page_description = isset($page_description) ? $page_description : 'Spécialiste
             </nav>
             <div class="header-actions">
                 <a href="<?php echo BASE_URL; ?>configurateur.php" class="btn btn-primary">CRÉER EN LIGNE</a>
-                <a href="<?php echo BASE_URL; ?>page_panier.php" class="header-icon" title="Panier">
+                <a href="<?php echo BASE_URL; ?>page_panier.php" class="header-icon cart-icon" title="Panier">
                     <img src="<?php echo BASE_URL; ?>IMAGES/icon-panier.png" alt="Panier">
-                    <!-- Un compteur d'articles sera ajouté ici dynamiquement plus tard -->
+                    <span class="cart-count"><?php echo get_cart_items_count(); ?></span>
                 </a>
                 <a href="<?php echo BASE_URL; ?>login.php" class="header-icon" title="Mon Compte">
                     <img src="<?php echo BASE_URL; ?>IMAGES/icon-compte.png" alt="Mon Compte">

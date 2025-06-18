@@ -103,6 +103,48 @@ nav.main-nav ul li a.active::after {
     width: 100%;
 }
 
+.header-actions .cart-icon {
+    position: relative;
+}
+.header-actions .cart-count {
+    background: var(--medium-blue);
+    color: var(--white-color);
+    border-radius: 50%;
+    font-size: 0.7em;
+    padding: 2px 6px;
+    position: absolute;
+    top: -8px;
+    right: -8px;
+}
+
+.burger-menu {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.8em;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    nav.main-nav ul {
+        flex-direction: column;
+        position: absolute;
+        top: 80px;
+        right: 0;
+        background: var(--white-color);
+        width: 200px;
+        padding: 20px;
+        box-shadow: var(--box-shadow);
+        display: none;
+    }
+    nav.main-nav ul.active {
+        display: flex;
+    }
+    .burger-menu {
+        display: block;
+    }
+}
+
 .header-actions {
     display: flex;
     align-items: center;

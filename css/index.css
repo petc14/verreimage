@@ -1,0 +1,62 @@
+/* Page d'accueil */
+.hero {
+    background: linear-gradient(rgba(0, 35, 73, 0.6), rgba(0, 35, 73, 0.6)), url('../IMAGES/hero-plaque-rose.jpg') no-repeat center center/cover;
+    min-height: 90vh;
+}
+.hero .btn-secondary {
+    color: var(--white-color);
+    border-color: var(--white-color);
+}
+.hero .btn-secondary:hover {
+    background-color: var(--white-color);
+    color: var(--dark-blue);
+}
+.section-bg-texture {
+    background-color: var(--light-gray);
+}
+.engagements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    text-align: center;
+}
+.engagement-card {
+    background: var(--white-color);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+.engagement-card .icon {
+    color: var(--medium-blue);
+    margin-bottom: 15px;
+}
+.engagement-card .icon svg { width: 50px; height: 50px; }
+.engagement-card h3 { font-size: 1.4em; margin-bottom: 10px; }
+.artisanat-section {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+.artisanat-section .content { flex: 3; }
+.artisanat-section .image-content { flex: 2; }
+.artisanat-section .image-content img { width: 100%; border-radius: 12px; box-shadow: var(--box-shadow); }
+.theme-card { text-decoration: none; }
+.theme-card .gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
+}
+.theme-card .theme-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 40px 20px 20px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    color: white;
+    font-family: var(--heading-font);
+    font-size: 1.8em;
+    transition: all 0.3s ease;
+}
+.theme-card:hover .theme-overlay {
+    background: linear-gradient(to top, rgba(0, 86, 179, 0.8), transparent);
+}

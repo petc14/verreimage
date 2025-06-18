@@ -11,6 +11,9 @@
 $page_title = "Boutique - Nos Modèles de Plaques";
 $page_description = "Découvrez tous nos thèmes de plaques funéraires personnalisables. Choisissez un modèle et commencez la création d'un hommage unique.";
 
+// Ajouter une feuille de style spécifique à cette page
+$extra_css = 'boutique.css';
+
 // Inclut l'en-tête commun à toutes les pages
 require_once 'src/templates/header.php';
 
@@ -20,84 +23,6 @@ require_once 'src/templates/header.php';
 $catalogue_themes = get_background_catalogue();
 ?>
 
-<style>
-    /* Styles spécifiques pour la page boutique */
-    .page-title-section {
-        text-align: center;
-        padding: 60px 20px;
-        background-color: var(--light-gray);
-    }
-    .page-title-section h1 {
-        font-size: 2.8em;
-    }
-    .page-title-section p {
-        font-size: 1.1em;
-        max-width: 700px;
-        margin: 15px auto 0;
-        color: var(--text-color-light);
-    }
-
-    .theme-gallery {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 30px;
-        padding-top: 40px;
-    }
-
-    .theme-card {
-        text-decoration: none;
-        color: inherit;
-        display: block;
-        border-radius: 8px;
-        overflow: hidden;
-        position: relative;
-        box-shadow: var(--box-shadow);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .theme-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.12);
-    }
-
-    .theme-card img {
-        width: 100%;
-        height: 400px;
-        object-fit: cover;
-        display: block;
-    }
-
-    .theme-card-overlay {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 40px 20px 20px;
-        background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
-        transition: background 0.3s ease;
-    }
-    .theme-card:hover .theme-card-overlay {
-        background: linear-gradient(to top, rgba(0, 86, 179, 0.8), transparent);
-    }
-
-    .theme-card h3 {
-        color: var(--white-color);
-        font-size: 1.8em;
-        margin: 0;
-        text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
-    }
-    
-    .cta-section {
-        text-align: center;
-        background-color: var(--dark-blue);
-        color: var(--white-color);
-    }
-    .cta-section h2 {
-        color: var(--white-color);
-    }
-    .cta-section .btn {
-        margin-top: 20px;
-    }
-</style>
 
 <div class="page-title-section">
     <h1>Nos Modèles de Plaques</h1>
