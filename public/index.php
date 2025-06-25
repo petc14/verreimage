@@ -96,7 +96,7 @@ switch ($requestUri) {
         break;
     default:
         http_response_code(404);
-        echo "404 - Page non trouvée"; // Ou rediriger vers une page d'erreur 404
+        render('404');
         break;
 }
 ?>

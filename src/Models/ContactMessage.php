@@ -3,25 +3,31 @@
 
 namespace Models;
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 class ContactMessage {
     public function sendEmail(string $name, string $email, string $subject, string $message): bool {
-        $to = "contact@verreimage.com"; // Adresse de destination réelle
-        $emailSubject = "Nouveau message de {$name} : {$subject}";
-        $emailBody = "Vous avez reçu un nouveau message depuis le formulaire de contact de votre site.\n\n";
-        $emailBody .= "--------------------------------------------------\n";
-        $emailBody .= "Nom : {$name}\n";
-        $emailBody .= "Email : {$email}\n";
-        $emailBody .= "Sujet : {$subject}\n\n";
-        $emailBody .= "Message :\n{$message}\n";
-        $emailBody .= "--------------------------------------------------\n";
+        $mail = new PHPMailer(true);
+        try {
+            $mail->setFrom($email, $name);
+            $mail->addAddress('contact@verreimage.com');
+            $mail->addReplyTo($email, $name);
+            $mail->Subject = "Nouveau message de {$name} : {$subject}";
 
-        $headers = "From: {$name} <{$email}>\r\n";
-        $headers .= "Reply-To: {$email}>\r\n";
-        $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-        $headers .= "X-Mailer: PHP/" . phpversion();
+            $body  = "Vous avez reçu un nouveau message depuis le formulaire de contact de votre site.\n\n";
+            $body .= "--------------------------------------------------\n";
+            $body .= "Nom : {$name}\n";
+            $body .= "Email : {$email}\n";
+            $body .= "Sujet : {$subject}\n\n";
+            $body .= "Message :\n{$message}\n";
+            $body .= "--------------------------------------------------\n";
 
-        // Utilisez un service d'envoi d'emails comme Mailgun, SendGrid, ou PHPMailer pour une production réelle
-        // La fonction mail() de PHP est souvent non fiable et bloquée par les hébergeurs
-        return mail($to, $emailSubject, $emailBody, $headers);
+            $mail->Body = $body;
+            $mail->send();
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
     }
 }

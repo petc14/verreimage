@@ -7,7 +7,8 @@ if (session_status() == PHP_SESSION_NONE) {
 
 date_default_timezone_set('Europe/Paris');
 error_reporting(E_ALL);
-ini_set('display_errors', 1);
+$appEnv = getenv('APP_ENV') ?: 'development';
+ini_set('display_errors', $appEnv === 'production' ? '0' : '1');
 
 // Définition des chemins absolus
 define('ROOT_PATH', dirname(__DIR__));
@@ -15,12 +16,14 @@ define('PUBLIC_PATH', ROOT_PATH . '/public');
 define('SRC_PATH', ROOT_PATH . '/src');
 define('CONTROLLERS_PATH', SRC_PATH . '/Controllers');
 define('MODELS_PATH', SRC_PATH . '/Models');
-define('VIEWS_PATH', ROOT_PATH . '/views');
+define('VIEWS_PATH', ROOT_PATH . '/Views');
 define('ASSETS_PATH', PUBLIC_PATH . '/assets');
+
+require_once ROOT_PATH . '/vendor/autoload.php';
 
 // Constantes du site
 define('SITE_NAME', 'Verre & Image');
-define('BASE_URL', 'http://localhost/verre-image-site/public/'); // IMPORTANT: Mettre à jour pour votre environnement
+define('BASE_URL', rtrim(getenv('BASE_URL') ?: 'http://localhost/verre-image-site/public/', '/') . '/');
 
 // Autoloading corrigé pour nos classes avec namespaces
 spl_autoload_register(function ($class) {
