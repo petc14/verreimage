@@ -1,0 +1,720 @@
+/* =============================================
+   CONFIGURATEUR.MIN.CSS - Verre & Image - 2025
+   - Version reconstruite pour un design fidèle et stable
+   ============================================= */
+
+/* -- Google Fonts -- */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap');
+
+/* -- Variables (Révisées pour plus de modernité) -- */
+:root {
+    --font-primary: 'Montserrat', sans-serif;
+    --font-secondary: 'Playfair Display', serif; /* Pour certains titres si besoin */
+
+    --color-primary-blue: #0056b3; /* Bleu vibrant pour les éléments principaux */
+    --color-primary-dark: #002349; /* Bleu très foncé pour textes et fonds d'impact */
+    --color-accent-green: #28a745; /* Vert pour succès/validation */
+    --color-neutral-light: #f8f9fa; /* Arrière-plan très clair */
+    --color-neutral-medium: #e9ecef; /* Gris moyen clair pour les séparations */
+    --color-neutral-dark: #6c757d; /* Gris foncé pour texte secondaire */
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-error: #dc3545; /* Rouge pour les erreurs */
+
+    --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-strong: 0 8px 25px rgba(0, 0, 0, 0.15);
+
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+
+    --transition-ease: all 0.25s ease-in-out;
+}
+
+/* -- Base -- */
+body#configurateur-page {
+    font-family: var(--font-primary);
+    color: var(--color-primary-dark);
+    background-color: var(--color-neutral-light);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+#configurateur-main {
+    padding-top: 85px; /* Ajusté à la hauteur réelle du header */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* -- Header du configurateur -- */
+.configurateur-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 40px; /* Padding ajusté */
+    background-color: var(--color-white);
+    border-bottom: 1px solid var(--color-neutral-medium);
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    z-index: 1000;
+    box-shadow: var(--shadow-subtle);
+}
+.configurateur-header .logo img {
+    height: 48px; /* Légèrement ajusté */
+    transition: var(--transition-ease);
+}
+.configurateur-header .logo img:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+.stepper {
+    display: flex;
+    gap: 45px; /* Espacement ajusté */
+    flex-wrap: wrap; /* Permet le passage à la ligne sur petits écrans */
+    justify-content: center;
+}
+.step {
+    padding-bottom: 10px;
+    font-weight: 600;
+    color: var(--color-neutral-dark); /* Gris plus doux pour les étapes inactives */
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    transition: var(--transition-ease);
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-size: 0.95em; /* Taille ajustée */
+}
+.step::before {
+    content: attr(data-step);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px; /* Taille du cercle */
+    height: 24px;
+    border-radius: 50%;
+    background-color: var(--color-neutral-medium);
+    color: var(--color-neutral-dark);
+    font-size: 0.75em;
+    font-weight: 700;
+    margin-right: 8px;
+    transition: var(--transition-ease);
+    box-shadow: var(--shadow-subtle);
+}
+.step.active {
+    color: var(--color-primary-dark);
+    border-bottom-color: var(--color-primary-blue);
+}
+.step.active::before {
+    background-color: var(--color-primary-blue);
+    color: var(--color-white);
+    box-shadow: var(--shadow-medium);
+}
+.step:hover {
+    color: var(--color-primary-dark);
+}
+
+.close-btn {
+    font-size: 2.5em;
+    text-decoration: none;
+    color: var(--color-neutral-dark);
+    transition: var(--transition-ease);
+    line-height: 1; /* Assure que le 'x' est bien centré verticalement */
+}
+.close-btn:hover {
+    color: var(--color-error);
+    transform: rotate(90deg) scale(1.1);
+}
+
+/* -- Corps du configurateur -- */
+.configurateur-body {
+    display: flex;
+    flex-grow: 1;
+    gap: 30px;
+    padding: 30px 40px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.preview-panel-3d {
+    flex: 1;
+    min-width: 450px; /* Augmenté pour une meilleure visualisation */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh; /* Hauteur ajustée pour équilibrer */
+    position: sticky;
+    top: 100px;
+    background-color: var(--color-white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-medium);
+    padding: 20px;
+}
+#canvas-container {
+    width: 100%;
+    height: 550px;
+    max-width: 700px;
+    background-color: var(--color-neutral-light); /* Fond du canvas */
+    border-radius: var(--border-radius-md);
+    cursor: grab;
+    overflow: hidden; /* Assure que le contenu ne déborde pas */
+    border: 1px solid var(--color-neutral-medium); /* Bordure subtile */
+}
+.view-controls {
+    margin-top: 25px;
+    display: flex;
+    gap: 15px; /* Espacement ajusté */
+}
+.btn-control {
+    background: var(--color-white);
+    border: 1px solid var(--color-neutral-medium);
+    border-radius: 50%;
+    width: 50px; /* Taille des boutons de contrôle */
+    height: 50px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor: pointer;
+    box-shadow: var(--shadow-subtle);
+    transition: var(--transition-ease);
+}
+.btn-control:hover {
+    background-color: var(--color-primary-blue);
+    border-color: var(--color-primary-blue);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-medium);
+}
+/* Style pour les SVG à l'intérieur des boutons de contrôle */
+.btn-control svg {
+    width: 28px; /* Taille des icônes SVG */
+    height: 28px;
+    fill: var(--color-neutral-dark); /* Couleur par défaut des icônes SVG */
+    transition: var(--transition-ease);
+}
+.btn-control:hover svg {
+    fill: var(--color-white); /* Icônes blanches au survol */
+}
+
+/* -- Panneau de contrôle -- */
+.controls-panel-config {
+    flex: 0 0 500px; /* Largeur augmentée pour le panneau de contrôle */
+    background-color: var(--color-white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-medium);
+    display: flex;
+    flex-direction: column;
+    min-height: calc(60vh + 40px); /* Aligné avec la hauteur du preview-panel */
+    overflow: hidden; /* Empêche le débordement de contenu */
+}
+.panel-content {
+    padding: 30px;
+    flex-grow: 1;
+    overflow-y: auto; /* Scroll interne si trop de contenu */
+    padding-bottom: 20px;
+}
+.panel-step {
+    display: none;
+    animation: fadeIn 0.4s ease-out;
+}
+.panel-step.active {
+    display: block;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.panel-title {
+    font-family: var(--font-primary);
+    font-weight: 700;
+    font-size: 2.2em; /* Taille ajustée */
+    margin-bottom: 30px;
+    color: var(--color-primary-dark);
+    border-bottom: 2px solid var(--color-neutral-medium); /* Ligne plus épaisse */
+    padding-bottom: 15px;
+}
+
+.option-group {
+    margin-bottom: 35px;
+}
+.option-group-title {
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 1.05em; /* Légèrement plus grand */
+    margin-bottom: 18px;
+    text-transform: uppercase;
+    color: var(--color-neutral-dark);
+}
+.info-icon {
+    width: 18px;
+    height: 18px;
+    margin-left: 10px;
+    color: var(--color-neutral-dark);
+    cursor: help;
+    transition: var(--transition-ease);
+}
+.info-icon:hover {
+    color: var(--color-primary-blue);
+}
+
+.option-grid {
+    display: grid;
+    gap: 18px; /* Espacement ajusté */
+}
+.option-grid.grid-2 { grid-template-columns: 1fr 1fr; }
+.option-grid.grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+.option-box {
+    border: 2px solid var(--color-neutral-medium);
+    border-radius: var(--border-radius-md);
+    padding: 15px;
+    cursor: pointer;
+    transition: var(--transition-ease);
+    text-align: center;
+    background-color: var(--color-white);
+    box-shadow: var(--shadow-subtle);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 80px; /* Hauteur minimale pour la consistance */
+}
+.option-box:hover {
+    border-color: var(--color-primary-blue);
+    box-shadow: var(--shadow-medium);
+    transform: translateY(-3px);
+}
+.option-box.selected {
+    border-color: var(--color-primary-blue);
+    background-color: #e6f7ff; /* Bleu très clair */
+    box-shadow: inset 0 0 0 1px var(--color-primary-blue), var(--shadow-medium);
+    transform: translateY(-1px);
+}
+.option-box .label {
+    font-weight: 600;
+    font-size: 1.05em;
+    color: var(--color-primary-dark);
+    display: block;
+    margin-bottom: 5px;
+}
+.option-box .price {
+    font-size: 0.9em;
+    color: var(--color-neutral-dark);
+    display: block;
+}
+/* Style pour les SVG et les IMG dans les boîtes d'option */
+.option-box img,
+.option-box svg { /* Cible les SVGs dans les option-box (fixations) */
+    width: 45px; /* Taille des images d'option */
+    height: 45px;
+    object-fit: contain; /* Pour les images */
+    margin: 0 auto 10px auto;
+    fill: var(--color-neutral-dark); /* Couleur par défaut des icônes SVG dans les options */
+    transition: var(--transition-ease);
+}
+.option-box:hover svg,
+.option-box.selected svg {
+    fill: var(--color-primary-blue); /* Couleur des icônes SVG au survol/sélection */
+}
+
+
+/* Styles pour les étapes spécifiques */
+#panel-step-2 .option-box {
+    min-height: 110px;
+    padding: 8px;
+}
+#panel-step-2 .option-box img {
+    width: 100%;
+    height: 70px;
+    object-fit: cover;
+    margin: 0;
+    border-radius: var(--border-radius-sm);
+    box-shadow: var(--shadow-subtle);
+    border: 1px solid var(--color-neutral-medium);
+}
+#panel-step-2 .option-box .label,
+#panel-step-2 .option-box .price {
+    display: none;
+}
+
+
+#panel-step-3 textarea {
+    width: 100%;
+    border: 1px solid var(--color-neutral-medium);
+    border-radius: var(--border-radius-md);
+    padding: 15px;
+    min-height: 120px;
+    resize: vertical;
+    margin-bottom: 20px;
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: var(--color-primary-dark);
+    background-color: var(--color-neutral-light);
+    transition: var(--transition-ease);
+}
+#panel-step-3 textarea:focus {
+    border-color: var(--color-primary-blue);
+    box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.2);
+    outline: none;
+}
+.text-editor-toolbar, .object-controls-toolbar { /* Combiné pour une mise en page similaire */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    border: 1px solid var(--color-neutral-medium);
+    border-radius: var(--border-radius-md);
+    padding: 10px;
+    margin-bottom: 25px;
+    background-color: var(--color-neutral-light);
+    box-shadow: var(--shadow-subtle);
+}
+#panel-step-3 .tool-btn {
+    background: var(--color-white);
+    border: 1px solid var(--color-neutral-medium);
+    padding: 10px 16px;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: var(--transition-ease);
+    font-weight: 500;
+    color: var(--color-primary-dark);
+    font-size: 0.95em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#panel-step-3 .tool-btn:hover {
+    background-color: var(--color-primary-blue);
+    color: var(--color-white);
+    border-color: var(--color-primary-blue);
+}
+#panel-step-3 .tool-btn.active {
+    background-color: var(--color-primary-blue);
+    color: var(--color-white);
+    border-color: var(--color-primary-blue);
+    box-shadow: inset 0 0 0 1px var(--color-primary-blue);
+}
+/* Style pour les SVG dans les tool-btn */
+#panel-step-3 .tool-btn svg {
+    width: 20px; /* Taille des icônes SVG dans la toolbar */
+    height: 20px;
+    fill: var(--color-primary-dark); /* Couleur par défaut des icônes SVG dans la toolbar */
+    transition: var(--transition-ease);
+}
+#panel-step-3 .tool-btn:hover svg,
+#panel-step-3 .tool-btn.active svg {
+    fill: var(--color-white); /* Icônes blanches au survol/actif */
+}
+
+/* Style pour les inputs select et number dans la toolbar */
+#font-family-select, #font-size-input {
+    padding: 8px 10px;
+    border: 1px solid var(--color-neutral-medium);
+    border-radius: var(--border-radius-sm);
+    font-family: var(--font-primary);
+    font-size: 0.9em;
+    color: var(--color-primary-dark);
+    background-color: var(--color-white);
+    transition: var(--transition-ease);
+}
+#font-family-select:focus, #font-size-input:focus {
+    border-color: var(--color-primary-blue);
+    box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.2);
+    outline: none;
+}
+#font-color-input {
+    width: 40px; /* Taille spécifique pour le color picker */
+    height: 38px; /* Hauteur ajustée pour alignement */
+    padding: 2px;
+    border: 1px solid var(--color-neutral-medium);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    background-color: var(--color-white);
+    transition: var(--transition-ease);
+}
+#font-color-input::-webkit-color-swatch-wrapper { padding: 0; }
+#font-color-input::-webkit-color-swatch { border: none; border-radius: var(--border-radius-sm); }
+
+
+#panel-step-3 .upload-zone {
+    border: 2px dashed var(--color-neutral-medium);
+    border-radius: var(--border-radius-md);
+    padding: 35px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition-ease);
+    background-color: var(--color-white);
+    box-shadow: var(--shadow-subtle);
+}
+#panel-step-3 .upload-zone:hover {
+    border-color: var(--color-primary-blue);
+    background-color: #f5fcff;
+    color: var(--color-primary-dark);
+    box-shadow: var(--shadow-medium);
+}
+#panel-step-3 .upload-zone p {
+    font-size: 1.25em;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--color-primary-dark);
+}
+#panel-step-3 .upload-zone span {
+    font-size: 0.95em;
+    color: var(--color-neutral-dark);
+}
+
+
+#panel-step-4 .checkbox-option {
+    display: flex;
+    align-items: center;
+    border: 2px solid var(--color-neutral-medium);
+    border-radius: var(--border-radius-md);
+    padding: 20px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: var(--transition-ease);
+    background-color: var(--color-white);
+    box-shadow: var(--shadow-subtle);
+}
+#panel-step-4 .checkbox-option:hover {
+    border-color: var(--color-primary-blue);
+    box-shadow: var(--shadow-medium);
+    transform: translateY(-3px);
+}
+#panel-step-4 .checkbox-option input[type="checkbox"] {
+    transform: scale(1.4);
+    margin-right: 20px;
+    flex-shrink: 0;
+    accent-color: var(--color-primary-blue);
+}
+#panel-step-4 .checkbox-option .label-price {
+    flex-grow: 1;
+    text-align: left;
+}
+#panel-step-4 .checkbox-option .label {
+    font-weight: 600;
+    font-size: 1.1em;
+    color: var(--color-primary-dark);
+    display: block;
+    margin-bottom: 5px;
+}
+#panel-step-4 .checkbox-option .price {
+    font-size: 0.95em;
+    color: var(--color-neutral-dark);
+}
+#panel-step-4 .checkbox-option.selected {
+    border-color: var(--color-primary-blue);
+    background-color: #e6f7ff;
+    box-shadow: inset 0 0 0 1px var(--color-primary-blue), var(--shadow-medium);
+    transform: translateY(-1px);
+}
+#panel-step-4 textarea#designer-comment {
+    width: 100%;
+    border: 1px solid var(--color-neutral-medium);
+    border-radius: var(--border-radius-md);
+    padding: 15px;
+    min-height: 90px;
+    margin-top: 15px;
+    resize: vertical;
+    font-size: 1em;
+    line-height: 1.5;
+    background-color: var(--color-neutral-light);
+    color: var(--color-primary-dark);
+    transition: var(--transition-ease);
+}
+#panel-step-4 textarea#designer-comment:focus {
+    border-color: var(--color-primary-blue);
+    box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.2);
+    outline: none;
+}
+
+
+/* Footer du panneau */
+.config-footer {
+    border-top: 1px solid var(--color-neutral-medium);
+    padding: 25px 30px;
+    background-color: var(--color-neutral-light);
+    border-bottom-left-radius: var(--border-radius-lg);
+    border-bottom-right-radius: var(--border-radius-lg);
+    margin-top: auto;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+}
+.summary-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 1.1em;
+    color: var(--color-primary-dark);
+}
+.summary-line .label { font-weight: 500; }
+.summary-line .value { font-weight: 700; }
+#total-price {
+    font-size: 1.9em;
+    font-weight: 700;
+    color: var(--color-primary-dark);
+}
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+.btn-config {
+    padding: 14px 35px;
+    border-radius: var(--border-radius-md);
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-ease);
+    font-size: 1.05em;
+    box-shadow: var(--shadow-subtle);
+}
+.btn-continue {
+    background-color: var(--color-primary-blue);
+    color: var(--color-white);
+}
+.btn-continue:hover {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-medium);
+}
+.btn-back {
+    background-color: var(--color-neutral-medium);
+    color: var(--color-primary-dark);
+}
+.btn-back:hover {
+    background-color: #d8dee3; /* Gris légèrement plus foncé */
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-medium);
+}
+.btn-back:disabled {
+    background-color: var(--color-neutral-light);
+    color: var(--color-neutral-dark);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    opacity: 0.7;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .configurateur-body {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+    .preview-panel-3d, .controls-panel-config {
+        position: static;
+        min-width: unset;
+        width: 100%;
+        max-width: 760px;
+    }
+    .controls-panel-config {
+        min-height: unset;
+    }
+    .stepper {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .configurateur-header {
+        padding: 10px 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+    .configurateur-header .logo { order: 1; }
+    .stepper { order: 3; width: 100%; justify-content: center; margin-top: 10px; }
+    .close-btn { order: 2; margin-left: auto; }
+
+    .configurateur-body {
+        padding: 15px;
+        gap: 20px;
+    }
+    .preview-panel-3d {
+        padding: 15px;
+    }
+    #canvas-container {
+        height: 400px;
+    }
+    .controls-panel-config {
+        padding-bottom: 20px;
+    }
+    .panel-content {
+        padding: 20px;
+    }
+    .panel-title {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+    }
+    .option-grid {
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 12px;
+    }
+    .option-box {
+        padding: 12px;
+        min-height: 70px;
+    }
+    .option-box img, .option-box svg { /* Règle combinée pour IMG et SVG */
+        width: 40px;
+        height: 40px;
+    }
+    #panel-step-2 .option-box img {
+        height: 50px;
+    }
+    .btn-control {
+        width: 40px;
+        height: 40px;
+    }
+    .btn-control svg { /* Cible le SVG directement */
+        width: 22px;
+        height: 22px;
+    }
+    #panel-step-3 .tool-btn {
+        padding: 8px 12px; /* Plus petit sur mobile */
+        font-size: 0.9em;
+    }
+    #panel-step-3 .tool-btn svg {
+        width: 18px; /* Taille des icônes de la toolbar sur mobile */
+        height: 18px;
+    }
+    #font-family-select, #font-size-input, #font-color-input {
+        height: 36px; /* Ajuster la hauteur des inputs */
+    }
+}
+
+@media (max-width: 480px) {
+    .stepper {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .step {
+        width: 100%;
+        padding-left: 5px;
+        font-size: 0.9em;
+    }
+    .step::before {
+        width: 20px;
+        height: 20px;
+        font-size: 0.7em;
+    }
+    .option-grid.grid-3, .option-grid.grid-2 {
+        grid-template-columns: 1fr;
+    }
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    .btn-config {
+        padding: 12px 25px;
+        font-size: 1em;
+    }
+}

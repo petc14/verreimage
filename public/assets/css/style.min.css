@@ -1,0 +1,1205 @@
+/* =============================================
+   STYLE.MIN.CSS - Verre & Image - 2025
+   - Styles pour le site principal
+   ============================================= */
+
+/* -- Google Fonts -- */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap');
+
+/* -- CSS Variables (Enhanced) -- */
+:root {
+    --primary-font: 'Montserrat', sans-serif;
+    --heading-font: 'Playfair Display', serif;
+
+    --color-primary: #0056b3; /* Bleu moyen, plus engageant */
+    --color-secondary: #28a745; /* Vert succès */
+    --color-dark-blue: #002349; /* Bleu très foncé, pour les textes et backgrounds d'impact */
+    --color-light-gray: #f8f9fa; /* Gris très clair */
+    --color-soft-white: #fdfdfd; /* Presque blanc */
+    --color-text-dark: #333; /* Texte principal foncé */
+    --color-text-medium: #555; /* Texte secondaire */
+    --color-text-light: #777; /* Texte léger, petites infos */
+    --color-white: #ffffff;
+    --color-border: #e0e0e0; /* Bordures subtiles */
+    --color-error: #dc3545; /* Rouge pour les messages d'erreur */
+
+    --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.05);
+    --shadow-medium: 0 5px 15px rgba(0, 0, 0, 0.08);
+    --shadow-strong: 0 10px 25px rgba(0, 0, 0, 0.1);
+
+    --border-radius-small: 4px;
+    --border-radius-medium: 8px;
+    --border-radius-large: 12px;
+
+    --transition-speed-fast: 0.2s;
+    --transition-speed-medium: 0.3s;
+    --transition-speed-slow: 0.5s;
+}
+
+/* -- Reset & Base Styles -- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--primary-font);
+    color: var(--color-text-dark);
+    background-color: var(--color-soft-white);
+    line-height: 1.6; /* Amélioration de la lisibilité */
+    font-size: 16px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--heading-font);
+    color: var(--color-dark-blue);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.8em;
+}
+
+h1 { font-size: 3.2em; }
+h2 { font-size: 2.5em; margin-bottom: 1em; text-align: center;} /* Ajout centrage par défaut pour les sections */
+h3 { font-size: 1.8em; }
+h4 { font-size: 1.4em; }
+
+p {
+    margin-bottom: 1em;
+    color: var(--color-text-medium);
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color var(--transition-speed-fast) ease;
+}
+a:hover {
+    color: var(--color-dark-blue);
+    text-decoration: underline;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* -- Utilities -- */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 0;
+}
+
+.section-bg-light {
+    background-color: var(--color-light-gray);
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* -- Buttons -- */
+.btn {
+    display: inline-block;
+    padding: 12px 28px;
+    font-size: 1em;
+    font-weight: 600;
+    border-radius: var(--border-radius-small);
+    cursor: pointer;
+    text-align: center;
+    transition: all var(--transition-speed-medium) ease;
+    border: 2px solid transparent;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary);
+}
+.btn-primary:hover {
+    background-color: var(--color-dark-blue);
+    border-color: var(--color-dark-blue);
+    color: var(--color-white);
+    text-decoration: none;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+.btn-secondary:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    text-decoration: none;
+    transform: translateY(-2px);
+}
+
+.btn-light {
+    background-color: var(--color-white);
+    color: var(--color-dark-blue);
+    border-color: var(--color-white);
+    box-shadow: var(--shadow-light);
+}
+.btn-light:hover {
+    background-color: var(--color-light-gray);
+    color: var(--color-dark-blue);
+    text-decoration: none;
+}
+
+.btn-sm {
+    padding: 8px 18px;
+    font-size: 0.9em;
+}
+
+/* -- Header & Navigation -- */
+header.main-header {
+    background: var(--color-white);
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08); /* Ombre plus visible pour donner de la profondeur */
+    border-bottom: 1px solid var(--color-border); /* Ligne subtile en bas */
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Centrage vertical de tous les éléments */
+    padding: 15px 5%;
+    width: 100%;
+}
+
+.main-header .logo img {
+    height: 60px; /* Taille légèrement augmentée pour le logo */
+    transition: transform var(--transition-speed-medium) ease;
+}
+.main-header .logo img:hover {
+    transform: scale(1.05); /* Léger zoom au survol du logo */
+}
+
+nav.main-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 40px; /* Augmentation de l'espacement entre les éléments du menu */
+    align-items: center;
+}
+
+nav.main-nav ul li a {
+    text-decoration: none;
+    color: var(--color-dark-blue);
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 7px;
+    font-size: 1.05em; /* Légèrement plus grand */
+    transition: color var(--transition-speed-fast) ease;
+}
+nav.main-nav ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background-color: var(--color-primary);
+    transition: width var(--transition-speed-medium) ease;
+}
+nav.main-nav ul li a:hover,
+nav.main-nav ul li a.active {
+    color: var(--color-primary); /* Couleur du texte change au survol */
+}
+nav.main-nav ul li a:hover::after,
+nav.main-nav ul li a.active::after {
+    width: 100%;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 25px; /* Espacement ajusté entre le bouton et les icônes */
+}
+.header-actions .btn-primary {
+    padding: 10px 22px;
+    font-size: 0.9em;
+    border-radius: var(--border-radius-medium);
+    white-space: nowrap; /* Empêche le bouton de se couper */
+}
+.header-actions .header-icon {
+    display: flex; /* Assure que l'icône est un flex container si besoin d'alignement interne */
+    align-items: center; /* Assure l'alignement vertical du contenu */
+    justify-content: center;
+}
+.header-actions .header-icon img {
+    height: 28px; /* Taille des icônes */
+    width: auto;
+    transition: transform var(--transition-speed-fast) ease;
+}
+.header-actions .header-icon img:hover {
+    transform: scale(1.1); /* Effet de légère augmentation au survol */
+}
+
+.burger-menu {
+    display: none; /* Caché par défaut pour desktop */
+    font-size: 2.2em; /* Taille légèrement augmentée pour l'icône burger */
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-dark-blue);
+    padding: 5px; /* Espace cliquable */
+}
+
+/* -- Mobile Navigation (Responsive) -- */
+@media (max-width: 992px) {
+    .main-header .logo img {
+        height: 55px;
+    }
+    nav.main-nav {
+        display: none; /* Masquer le menu normal */
+        flex-direction: column;
+        position: absolute;
+        top: 80px; /* Sous le header */
+        left: 0;
+        width: 100%;
+        background-color: var(--color-white);
+        box-shadow: var(--shadow-medium);
+        padding: 20px 0;
+        border-top: 1px solid var(--color-border);
+        transition: transform var(--transition-speed-medium) ease-in-out, opacity var(--transition-speed-medium) ease-in-out;
+        transform: translateY(-100%); /* Initialement caché vers le haut */
+        opacity: 0;
+    }
+    nav.main-nav.active {
+        display: flex; /* Afficher quand actif */
+        transform: translateY(0);
+        opacity: 1;
+    }
+    nav.main-nav ul {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+        padding: 0 5%;
+    }
+    nav.main-nav ul li a {
+        width: 100%;
+        padding: 10px 0;
+        text-align: left;
+    }
+    nav.main-nav ul li a::after {
+        display: none; /* Masquer le soulignement pour mobile */
+    }
+    .header-actions {
+        order: 3; /* Placer les actions après le burger menu si nécessaire */
+        gap: 20px;
+    }
+    .burger-menu {
+        display: block; /* Afficher le burger menu */
+    }
+}
+@media (max-width: 768px) {
+    .header-actions .btn {
+        display: none; /* Masquer le bouton sur très petits écrans */
+    }
+    .header-actions {
+        gap: 15px;
+    }
+}
+
+/* -- Main content padding (adjust for header) -- */
+main {
+    padding-top: 80px; /* Hauteur du header fixe */
+}
+
+/* -- Hero Section (Page d'accueil) -- */
+.hero {
+    background: linear-gradient(rgba(0, 35, 73, 0.7), rgba(0, 35, 73, 0.7)), url('../images/hero-plaque-rose.jpg') no-repeat center center/cover;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--color-white);
+    padding: 20px;
+    position: relative; /* Pour positionner le contenu */
+}
+.hero::before { /* Overlay plus sombre pour meilleure lisibilité du texte */
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.2); /* Légèrement plus sombre */
+    z-index: 1;
+}
+.hero-content {
+    max-width: 800px;
+    position: relative;
+    z-index: 2;
+    background: rgba(0,0,0,0.4); /* Légèrement plus transparent */
+    padding: 50px; /* Plus de padding */
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--shadow-medium);
+}
+.hero h1 {
+    color: var(--color-white);
+    font-size: 3.8em; /* Plus grand */
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.7); /* Ombre plus prononcée */
+    margin-bottom: 0.5em;
+}
+.hero p {
+    font-size: 1.2em;
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+    color: rgba(255, 255, 255, 0.9);
+}
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+.hero .btn-primary {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+.hero .btn-primary:hover {
+    background-color: var(--color-dark-blue);
+    border-color: var(--color-dark-blue);
+}
+.hero .btn-secondary {
+    color: var(--color-white);
+    border-color: var(--color-white);
+    background-color: rgba(255,255,255,0.1); /* Légèrement visible */
+}
+.hero .btn-secondary:hover {
+    background-color: var(--color-white);
+    color: var(--color-dark-blue);
+}
+
+/* -- Section Engagements (Page d'accueil) -- */
+.engagements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Ajusté pour plus de flexibilité */
+    gap: 30px;
+    text-align: center;
+    margin-top: 40px; /* Espacement après le titre */
+}
+.engagement-card {
+    background: var(--color-white);
+    padding: 35px 25px; /* Plus de padding */
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-light);
+    transition: transform var(--transition-speed-medium) ease, box-shadow var(--transition-speed-medium) ease;
+}
+.engagement-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-strong);
+}
+.engagement-card .icon {
+    color: var(--color-primary); /* Utilisation de la variable */
+    margin-bottom: 20px; /* Plus d'espace */
+    font-size: 2.8em; /* Icône plus grande */
+}
+.engagement-card .icon svg {
+    width: 60px; /* Taille explicite pour SVG */
+    height: 60px;
+}
+.engagement-card h3 {
+    font-size: 1.5em;
+    margin-bottom: 12px;
+    color: var(--color-dark-blue);
+}
+.engagement-card p {
+    font-size: 0.95em;
+    color: var(--color-text-medium);
+}
+
+/* -- Section Artisanat (Page d'accueil) -- */
+.artisanat-section {
+    display: flex;
+    align-items: center;
+    gap: 60px; /* Plus d'espace */
+    padding: 80px 0;
+}
+.artisanat-section .content {
+    flex: 3;
+    padding-right: 20px; /* Évite que le texte ne touche l'image */
+}
+.artisanat-section .content h2 {
+    text-align: left; /* Annule le centrage par défaut pour cette section */
+    margin-bottom: 0.8em;
+}
+.artisanat-section .image-content {
+    flex: 2;
+}
+.artisanat-section .image-content img {
+    width: 100%;
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--shadow-medium);
+    transition: transform var(--transition-speed-medium) ease;
+}
+.artisanat-section .image-content img:hover {
+    transform: scale(1.02);
+}
+@media (max-width: 992px) {
+    .artisanat-section {
+        flex-direction: column;
+        gap: 40px;
+    }
+    .artisanat-section .content, .artisanat-section .image-content {
+        flex: none;
+        width: 100%;
+        padding-right: 0;
+    }
+    .artisanat-section .content h2 {
+        text-align: center;
+    }
+}
+
+/* -- Section Thèmes Populaires (Page d'accueil) -- */
+.theme-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+.theme-card {
+    text-decoration: none;
+    color: inherit;
+}
+.theme-card .gallery-item { /* Utilisation de la classe générique pour le shadow */
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-medium);
+    transition: transform var(--transition-speed-medium) ease, box-shadow var(--transition-speed-medium) ease;
+}
+.theme-card .gallery-item:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-strong);
+}
+.theme-card img {
+    width: 100%;
+    height: 300px; /* Hauteur fixe pour l'homogénéité */
+    object-fit: cover;
+    display: block;
+    transition: transform var(--transition-speed-slow) ease;
+}
+.theme-card .gallery-item:hover img {
+    transform: scale(1.05); /* Léger zoom sur l'image */
+}
+.theme-card .theme-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 30px 20px 20px; /* Ajustement du padding */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent); /* Plus opaque */
+    color: var(--color-white);
+    font-family: var(--heading-font);
+    font-size: 1.6em; /* Taille ajustée */
+    transition: background var(--transition-speed-medium) ease;
+}
+.theme-card:hover .theme-overlay {
+    background: linear-gradient(to top, var(--color-primary), rgba(0, 0, 0, 0.4)); /* Changement de couleur au survol */
+}
+
+/* -- Call to Action Sections -- */
+.cta-section {
+    text-align: center;
+    background-color: var(--color-dark-blue);
+    color: var(--color-white);
+    padding: 80px 20px; /* Plus de padding */
+    margin-top: 80px; /* Séparation des sections */
+}
+.cta-section h2 {
+    color: var(--color-white);
+    font-size: 2.8em;
+    margin-bottom: 0.5em;
+}
+.cta-section p {
+    font-size: 1.1em;
+    max-width: 700px;
+    margin: 0 auto 30px auto;
+    color: rgba(255, 255, 255, 0.85);
+}
+.cta-section .btn {
+    margin-top: 20px;
+}
+
+/* --- Footer --- */
+footer.main-footer {
+    background-color: var(--color-dark-blue); /* Bleu très foncé pour le fond */
+    color: var(--color-white); /* Texte général en blanc pur pour une meilleure lisibilité */
+    padding: 60px 0 30px 0; /* Padding supérieur et inférieur */
+    font-size: 0.95em; /* Légèrement plus grand pour la lisibilité */
+}
+/* Nouvelle règle pour les paragraphes dans le footer */
+footer.main-footer p {
+    color: var(--color-white); /* Force le texte des paragraphes à être blanc */
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Colonnes plus larges */
+    gap: 50px; /* Plus d'espace entre les colonnes */
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Bordure un peu plus visible et contrastée */
+}
+.footer-col {
+    padding: 10px; /* Petit padding interne pour les colonnes */
+}
+.footer-title {
+    font-family: var(--heading-font);
+    color: var(--color-white); /* Titres en blanc pur */
+    font-size: 1.8em; /* Titres un peu plus grands */
+    margin-bottom: 25px; /* Plus d'espace sous les titres */
+    font-weight: 700; /* Plus gras */
+}
+.footer-col p, .footer-col ul {
+    margin-bottom: 12px; /* Plus d'espace sous les paragraphes/listes */
+    line-height: 1.7; /* Améliore la lisibilité du texte long */
+}
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+}
+.footer-col ul li {
+    margin-bottom: 8px; /* Espace entre les éléments de liste */
+}
+.footer-col ul li a {
+    color: var(--color-white); /* Liens en blanc pur */
+    text-decoration: none;
+    transition: color var(--transition-speed-fast) ease, transform var(--transition-speed-fast) ease;
+    display: block; /* Rend toute la zone du lien cliquable */
+    padding: 4px 0;
+}
+.footer-col ul li a:hover {
+    color: var(--color-primary); /* Liens en bleu au survol pour les distinguer */
+    text-decoration: underline;
+    transform: translateX(5px); /* Léger décalage au survol */
+}
+.footer-col strong {
+    color: var(--color-white); /* Numéro de téléphone en blanc pur */
+}
+.copyright {
+    text-align: center;
+    padding-top: 30px;
+    font-size: 0.85em;
+    color: rgba(255, 255, 255, 0.8); /* Texte du copyright un peu plus clair qu'avant */
+}
+
+/* Responsive pour le Footer */
+@media (max-width: 768px) {
+    .footer-container {
+        grid-template-columns: 1fr; /* Empile les colonnes sur mobile */
+        text-align: center; /* Centre le texte des colonnes */
+        gap: 30px;
+    }
+    .footer-col ul {
+        align-items: center; /* Centre les listes pour les éléments */
+    }
+    .footer-col ul li a {
+        text-align: center;
+        padding: 4px 0;
+    }
+    .footer-col ul li a:hover {
+        transform: none; /* Désactive le décalage sur mobile si centré */
+    }
+}
+
+/* --- Specific Page Styles (from original inline styles, now moved here) --- */
+
+/* Page Headers (common for many pages) */
+.page-title-section {
+    text-align: center;
+    padding: 80px 20px 40px; /* Ajustement du padding */
+    background-color: var(--color-light-gray);
+}
+.page-title-section h1 {
+    font-size: 3em; /* Plus grand */
+    color: var(--color-dark-blue);
+    margin-bottom: 0.4em;
+}
+.page-title-section p {
+    font-size: 1.15em; /* Plus grand */
+    max-width: 800px;
+    margin: 15px auto 0;
+    color: var(--color-text-medium);
+}
+
+/* Reusable Panel Styles (for forms, summaries etc.) */
+.content-panel, .form-panel, .contact-info-panel, .contact-form-panel, .cart-summary-panel, .order-summary-panel, .payment-options-panel, .payment-method {
+    background-color: var(--color-white);
+    padding: 40px;
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-medium);
+    margin-bottom: 30px; /* Pour les panneaux qui se suivent */
+}
+
+/* Forms general styling */
+.form-group {
+    margin-bottom: 25px;
+}
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--color-dark-blue);
+}
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-small);
+    font-family: var(--primary-font);
+    font-size: 1em;
+    transition: border-color var(--transition-speed-fast) ease, box-shadow var(--transition-speed-fast) ease;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.2); /* Ombre de focus */
+    outline: none;
+}
+.form-row {
+    display: flex;
+    gap: 30px; /* Plus d'espace */
+}
+.form-row .form-group {
+    flex: 1;
+}
+
+/* Messages (success/error) */
+.form-message {
+    padding: 18px; /* Plus de padding */
+    border-radius: var(--border-radius-small);
+    margin-bottom: 25px;
+    text-align: center;
+    font-weight: 500;
+}
+.form-message.success {
+    background-color: #d4edda; /* Vert clair */
+    color: #155724; /* Vert foncé */
+    border: 1px solid #c3e6cb;
+}
+.form-message.error {
+    background-color: #f8d7da; /* Rouge clair */
+    color: #721c24; /* Rouge foncé */
+    border: 1px solid #f5c6cb;
+}
+span[style="color:red;font-size:0.8em;"] { /* Targeting inline error messages */
+    color: var(--color-error) !important;
+    font-size: 0.9em !important;
+    display: block;
+    margin-top: 5px;
+}
+
+/* -- Page "Nos Réalisations" -- */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Ajustement pour flexibilité */
+    gap: 25px; /* Espacement ajusté */
+    margin-top: 40px; /* Espace après le titre de section */
+}
+.gallery-item {
+    border-radius: var(--border-radius-medium);
+    overflow: hidden;
+    box-shadow: var(--shadow-medium);
+    cursor: pointer;
+    transition: transform var(--transition-speed-medium) ease, box-shadow var(--transition-speed-medium) ease;
+}
+.gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-strong);
+}
+.gallery-item img {
+    width: 100%;
+    height: 250px; /* Hauteur fixe pour l'homogénéité */
+    object-fit: cover;
+    display: block;
+    transition: transform var(--transition-speed-slow) ease;
+}
+.gallery-item:hover img {
+    transform: scale(1.08); /* Effet zoom plus prononcé */
+}
+
+/* Lightbox (from script.js) */
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-speed-medium) ease, visibility var(--transition-speed-medium) ease;
+}
+.lightbox.active {
+    opacity: 1;
+    visibility: visible;
+}
+.lightbox img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-strong);
+}
+.close-lightbox {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: var(--color-white);
+    font-size: 3em;
+    cursor: pointer;
+    transition: color var(--transition-speed-fast) ease;
+}
+.close-lightbox:hover {
+    color: var(--color-primary);
+}
+
+.testimonials-section {
+    background-color: var(--color-light-gray);
+    padding: 80px 0;
+    margin-top: 60px; /* Espacement avec la galerie */
+}
+.testimonials-section h2 {
+    margin-bottom: 40px;
+}
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+.testimonial-card {
+    background: var(--color-white);
+    padding: 30px;
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-light);
+    border-left: 5px solid var(--color-primary); /* Ajout d'une touche de couleur */
+}
+.testimonial-card p {
+    font-style: italic;
+    margin-bottom: 20px;
+    font-size: 1.05em;
+    color: var(--color-text-dark);
+}
+.testimonial-card .author {
+    font-weight: 600;
+    color: var(--color-primary);
+    text-align: right; /* Aligner l'auteur à droite */
+    display: block;
+    font-size: 0.95em;
+}
+
+/* -- Page Présentation (from original inline styles) -- */
+.feature-section {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    margin-bottom: 80px; /* Plus d'espace entre les sections */
+}
+.feature-section:nth-child(even) {
+    flex-direction: row-reverse;
+}
+.feature-content {
+    flex: 1;
+}
+.feature-content h2 {
+    text-align: left;
+    font-size: 2.5em; /* Ajusté */
+    margin-bottom: 20px;
+    color: var(--color-dark-blue);
+}
+.feature-content p {
+    font-size: 1.05em;
+}
+.feature-image {
+    flex: 1;
+}
+.feature-image img {
+    width: 100%;
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--shadow-medium);
+    transition: transform var(--transition-speed-medium) ease;
+}
+.feature-image img:hover {
+    transform: scale(1.02);
+}
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 25px; /* Plus d'espace */
+}
+.feature-list li {
+    padding-left: 35px; /* Plus d'espace pour le coche */
+    position: relative;
+    margin-bottom: 12px; /* Plus d'espace entre les items */
+    font-size: 1.05em;
+    color: var(--color-text-dark);
+}
+.feature-list li::before {
+    content: '✔';
+    color: var(--color-secondary); /* Utilisation de la variable */
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+/* Responsive pour feature-section */
+@media (max-width: 768px) {
+    .feature-section, .feature-section:nth-child(even) {
+        flex-direction: column;
+        text-align: center;
+    }
+    .feature-content h2 {
+        text-align: center;
+    }
+    .feature-list {
+        text-align: left; /* Conserver les listes alignées à gauche */
+    }
+}
+
+
+/* -- Page Boutique (from original inline styles) -- */
+.theme-gallery { /* Redéfini ici pour la page boutique spécifiquement */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    padding-top: 40px;
+}
+/* Styles pour .theme-card, .theme-card-overlay, etc. sont les mêmes que pour home.php, donc déjà gérés plus haut. */
+
+
+/* -- Page Panier -- */
+.cart-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    align-items: flex-start;
+    padding: 40px 0; /* Padding au lieu de container */
+}
+.cart-items-panel {
+    flex: 3;
+    min-width: 400px;
+    background-color: var(--color-white); /* Ajouté pour consistance */
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-medium);
+    padding: 30px;
+}
+.cart-summary-panel {
+    flex: 2;
+    min-width: 300px;
+    background-color: var(--color-white);
+    padding: 30px;
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-medium);
+    position: sticky;
+    top: 100px; /* Ajusté */
+}
+.cart-item {
+    display: flex;
+    gap: 25px; /* Plus d'espace */
+    padding: 20px 0;
+    border-bottom: 1px solid var(--color-border);
+    align-items: center; /* Centrer verticalement */
+}
+.cart-item:last-child {
+    border-bottom: none; /* Pas de bordure pour le dernier élément */
+}
+.cart-item-image img {
+    width: 140px; /* Plus grande image */
+    height: 100px;
+    object-fit: cover;
+    border-radius: var(--border-radius-small);
+    border: 1px solid var(--color-border);
+}
+.cart-item-details {
+    flex-grow: 1;
+}
+.cart-item-details h3 {
+    font-size: 1.3em;
+    margin: 0 0 8px 0;
+    color: var(--color-dark-blue);
+}
+.cart-item-details p {
+    font-size: 0.9em;
+    color: var(--color-text-medium);
+    margin: 0;
+}
+.cart-item-actions {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 100px; /* Hauteur de l'image pour alignement */
+}
+.cart-item-actions .price {
+    font-size: 1.3em; /* Plus grand */
+    font-weight: 700;
+    color: var(--color-dark-blue);
+    margin-bottom: 10px;
+}
+.remove-btn {
+    color: var(--color-error); /* Couleur erreur */
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: color var(--transition-speed-fast) ease;
+}
+.remove-btn:hover {
+    text-decoration: underline;
+    color: #a71d2a; /* Rouge plus foncé au survol */
+}
+.empty-cart-message {
+    text-align: center;
+    padding: 60px; /* Plus de padding */
+    background-color: var(--color-white);
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-medium);
+    margin-top: 40px; /* Espacement */
+}
+.empty-cart-message h2 {
+    font-size: 2em;
+    margin-bottom: 15px;
+}
+.empty-cart-message p {
+    font-size: 1.1em;
+    margin-bottom: 25px;
+}
+
+/* Summary lines (reused for cart, checkout, payment, confirmation) */
+.summary-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 1.05em;
+    color: var(--color-text-dark);
+}
+.summary-line strong {
+    color: var(--color-dark-blue);
+}
+.summary-line:last-of-type {
+    font-size: 1.4em; /* Total plus grand */
+    font-weight: 700;
+    padding-top: 15px;
+}
+hr {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: 25px 0;
+}
+
+/* -- Page Commande (Checkout) -- */
+.checkout-layout { /* Utilise le même flex layout que le panier */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    align-items: flex-start;
+    padding: 40px 0;
+}
+.checkout-form-panel {
+    flex: 3;
+    min-width: 400px;
+}
+.order-summary-panel { /* Same as cart-summary-panel */
+    flex: 2;
+    min-width: 300px;
+    background-color: var(--color-white);
+    padding: 30px;
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-medium);
+    position: sticky;
+    top: 100px;
+}
+.form-section {
+    background-color: var(--color-white); /* Ajouté pour consistance */
+    padding: 40px;
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-medium);
+    margin-bottom: 30px; /* Espace entre les sections du formulaire */
+}
+.form-section h2 {
+    font-size: 2em; /* Ajusté */
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--color-border);
+    padding-bottom: 15px;
+    color: var(--color-dark-blue);
+}
+.form-group input[type="checkbox"] {
+    width: auto;
+    margin-right: 10px;
+    transform: scale(1.2); /* Rendre la checkbox plus visible */
+}
+.form-group label[for="use_shipping_for_billing"] {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 0;
+}
+
+/* -- Page Paiement -- */
+/* Layout et panels réutilisent les styles de la commande/panier */
+.payment-method {
+    margin-top: 40px; /* Espacement après le bloc info-recap */
+}
+.info-recap {
+    background-color: var(--color-light-gray);
+    border: 1px solid var(--color-border);
+    padding: 25px; /* Plus de padding */
+    border-radius: var(--border-radius-medium);
+    margin-bottom: 30px;
+}
+.info-recap p {
+    margin: 5px 0;
+    font-size: 1em;
+    color: var(--color-text-dark);
+}
+.info-recap strong {
+    color: var(--color-dark-blue);
+}
+
+
+/* -- Page Confirmation -- */
+.confirmation-container {
+    max-width: 800px;
+    margin: 60px auto; /* Marge supérieure ajustée */
+    background-color: var(--color-white);
+    padding: 50px; /* Plus de padding */
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--shadow-strong);
+    text-align: center;
+}
+.confirmation-icon {
+    color: var(--color-secondary); /* Vert succès */
+    font-size: 5em; /* Plus grande icône */
+    margin-bottom: 25px;
+    animation: bounceIn 1s ease-out; /* Ajout d'une animation */
+}
+@keyframes bounceIn {
+    0% { transform: scale(0.3); opacity: 0; }
+    50% { transform: scale(1.1); opacity: 1; }
+    70% { transform: scale(0.9); }
+    100% { transform: scale(1); }
+}
+
+.confirmation-container h1 {
+    font-size: 2.8em; /* Ajusté */
+    margin-bottom: 20px;
+    color: var(--color-dark-blue);
+}
+.confirmation-container p {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+}
+.order-summary {
+    text-align: left;
+    margin-top: 40px; /* Plus d'espace */
+    padding: 30px; /* Plus de padding */
+    background-color: var(--color-light-gray);
+    border-radius: var(--border-radius-medium);
+    border: 1px solid var(--color-border);
+}
+.order-summary h2 {
+    font-size: 1.6em; /* Ajusté */
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 12px;
+    color: var(--color-dark-blue);
+    text-align: left; /* Annule le centrage global pour ce h2 */
+}
+.order-summary h3 {
+    font-size: 1.3em;
+    color: var(--color-dark-blue);
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+.order-summary ul {
+    list-style: none;
+    padding: 0;
+}
+.order-summary ul li {
+    margin-bottom: 8px;
+    color: var(--color-text-medium);
+}
+.next-steps {
+    margin-top: 40px; /* Plus d'espace */
+    text-align: left;
+}
+.next-steps h3 {
+    font-size: 1.6em;
+    margin-bottom: 15px;
+    color: var(--color-dark-blue);
+}
+.next-steps p {
+    margin-bottom: 10px;
+    font-size: 1em;
+    color: var(--color-text-dark);
+}
+
+/* -- Page Login/Register -- */
+/* Layout et panels réutilisent les styles généraux */
+.login-page-container {
+    padding: 60px 0; /* Padding ajusté */
+}
+.form-panel h2 {
+    font-size: 2.2em; /* Ajusté */
+}
+.form-panel p {
+    font-size: 1.05em;
+    color: var(--color-text-medium);
+}
+.form-panel .btn {
+    margin-top: 15px;
+}
+.form-panel.register-panel { /* Using a custom class for consistency in this context */
+    background-color: var(--color-light-gray); /* Fond clair pour le panneau d'inscription */
+    border: 1px solid var(--color-border); /* Bordure subtile */
+}
+
+/* -- Page Contact -- */
+/* Layout et panels réutilisent les styles généraux */
+.contact-layout {
+    padding: 60px 0; /* Padding ajusté */
+}
+.info-block {
+    display: flex;
+    align-items: flex-start;
+    gap: 25px; /* Plus d'espace */
+    margin-bottom: 30px;
+}
+.info-block .icon {
+    flex-shrink: 0;
+    width: 50px; /* Plus grande icône */
+    height: 50px;
+    background-color: var(--color-light-gray);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+    font-size: 1.5em; /* Taille du glyphe */
+}
+.info-block div strong {
+    display: block;
+    font-size: 1.1em;
+    margin-bottom: 5px;
+    color: var(--color-dark-blue);
+}
+.info-block div a {
+    color: var(--color-text-medium);
+}
+.info-block div a:hover {
+    color: var(--color-primary);
+}
