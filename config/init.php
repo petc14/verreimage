@@ -17,6 +17,12 @@ define('CONTROLLERS_PATH', SRC_PATH . '/Controllers');
 define('MODELS_PATH', SRC_PATH . '/Models');
 define('VIEWS_PATH', ROOT_PATH . '/views');
 define('ASSETS_PATH', PUBLIC_PATH . '/assets');
+define('VENDOR_PATH', ROOT_PATH . '/vendor');
+
+// Charge l'autoloader de Composer s'il existe
+if (file_exists(VENDOR_PATH . '/autoload.php')) {
+    require_once VENDOR_PATH . '/autoload.php';
+}
 
 // Constantes du site
 define('SITE_NAME', 'Verre & Image');
@@ -25,27 +31,23 @@ define('BASE_URL', 'http://localhost/verre-image-site/public/'); // IMPORTANT: M
 // Autoloading corrigé pour nos classes avec namespaces
 spl_autoload_register(function ($class) {
     // Bases de répertoires pour les namespaces
-    $namespaces = [
+    $map = [
         'Models\\' => MODELS_PATH . '/',
         'Controllers\\' => CONTROLLERS_PATH . '/',
     ];
 
-    foreach ($namespaces as $prefix => $base_dir) {
-        // Vérifie si la classe utilise le préfixe de namespace actuel
+    foreach ($map as $prefix => $base_dir) {
         $len = strlen($prefix);
-        if (strncmp($prefix, $class, $len) === 0) {
-            // Récupère le nom de la classe relatif au namespace (sans le préfixe)
-            $relative_class = substr($class, $len);
+        if (strncmp($prefix, $class, $len) !== 0) {
+            continue;
+        }
 
-            // Remplace les séparateurs de namespace par les séparateurs de répertoire
-            // et ajoute l'extension .php
-            $file = $base_dir . str_replace('\\', DIRECTORY_SEPARATOR, $relative_class) . '.php';
+        $relative = substr($class, $len);
+        $file = $base_dir . str_replace('\\', DIRECTORY_SEPARATOR, $relative) . '.php';
 
-            // Si le fichier existe, l'inclure
-            if (file_exists($file)) {
-                require_once $file;
-                return;
-            }
+        if (is_file($file)) {
+            require_once $file;
+            return;
         }
     }
 });
