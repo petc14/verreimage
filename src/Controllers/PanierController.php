@@ -48,35 +48,51 @@ class PanierController {
             $format = sanitize_input($_POST['format'] ?? '30x22');
             $fixation = sanitize_input($_POST['fixation'] ?? 'plaque_seule');
             $background = sanitize_input($_POST['background_image'] ?? 'assets/images/placeholder-plaque.jpg');
-            $textContent = sanitize_input($_POST['text_content'] ?? '');
-            $imageUploads = json_decode($_POST['image_uploads'] ?? '[]', true); // Assurez-vous que c'est un tableau JSON
             $price = floatval($_POST['price'] ?? 175);
-            $thumbnailPath = sanitize_input($_POST['thumbnail_path'] ?? null); // Si générée côté client
+            $thumbnailPath = sanitize_input($_POST['thumbnail_path'] ?? null);
 
-            // Enregistrer la plaque personnalisée dans la BDD et obtenir son ID
+            // CORRECTED: Retrieve and decode the full Fabric.js objects data
+            $fabricObjectsDataJson = $_POST['fabric_objects_data'] ?? '[]';
+            $fabricObjectsData = json_decode($fabricObjectsDataJson, true);
+
+            // Extract text content and image uploads from the decoded Fabric.js data
+            $textContent = '';
+            $imageUploads = [];
+
+            foreach ($fabricObjectsData as $obj) {
+                if ($obj['type'] === 'i-text' && isset($obj['text'])) {
+                    $textContent .= $obj['text'] . "\n"; // Concatenate text from all text objects
+                } elseif ($obj['type'] === 'image' && isset($obj['src'])) {
+                    // Store image paths. Remove BASE_URL from the path if present.
+                    $imageUploads[] = str_replace(BASE_URL, '', $obj['src']);
+                }
+            }
+            $textContent = trim($textContent); // Clean up leading/trailing whitespace
+
+            // Save the custom plaque details into the database and get its ID
             $productModel = new Product();
             $customizationId = $productModel->saveCustomPlaque([
                 'format' => $format,
                 'fixation' => $fixation,
                 'background_image' => $background,
-                'text_content' => $textContent,
-                'image_uploads' => $imageUploads,
+                'text_content' => $textContent, // Now correctly populated from fabricObjectsData
+                'image_uploads' => $imageUploads, // Now correctly populated from fabricObjectsData
                 'price' => $price,
                 'thumbnail_path' => $thumbnailPath
             ]);
 
-            // Ajouter la plaque au panier
+            // Add the plaque to the cart session
             Cart::addToCart($customizationId, $price, [
                 'format' => $format,
                 'fixation' => $fixation,
                 'thumbnail' => $thumbnailPath ? (BASE_URL . $thumbnailPath) : (BASE_URL . 'assets/images/placeholder-plaque.jpg')
             ]);
 
-            // Rediriger vers le panier
+            // Redirect to the cart page
             header('Location: ' . BASE_URL . 'panier');
             exit();
         }
-        header('Location: ' . BASE_URL . 'boutique'); // Rediriger si accès direct
+        header('Location: ' . BASE_URL . 'boutique'); // Redirect if accessed directly or via wrong method
         exit();
     }
 
