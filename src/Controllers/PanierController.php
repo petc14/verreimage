@@ -4,7 +4,7 @@
 namespace Controllers;
 
 use Models\Cart;
-use Models\Product; // Pour récupérer les détails de la plaque personnalisée
+use Models\Product;
 
 class PanierController {
     public function index() {
@@ -17,15 +17,41 @@ class PanierController {
         $cartTotal = Cart::getCartTotal();
         $cartCount = Cart::getCartItemsCount();
 
-        // Récupérer les détails complets des plaques si nécessaire pour l'affichage
+        // NOUVELLE LOGIQUE POUR ÉVITER LES REQUÊTES N+1
+        $customPlaqueIds = [];
+        foreach ($cartItems as $id => $item) {
+            // On suppose que tous les IDs du panier sont des IDs de plaques personnalisées pour cette optimisation
+            $customPlaqueIds[] = $id;
+        }
+
         $productModel = new Product();
+        $plaqueDetailsMap = [];
+        if (!empty($customPlaqueIds)) {
+            // Appeler la nouvelle méthode getCustomPlaquesByIds pour récupérer tous les détails en une seule requête
+            $plaqueDetails = $productModel->getCustomPlaquesByIds($customPlaqueIds);
+            foreach ($plaqueDetails as $detail) {
+                $plaqueDetailsMap[$detail['id']] = $detail;
+            }
+        }
+
         foreach ($cartItems as $id => &$item) {
-            $plaqueDetails = $productModel->getCustomPlaqueById($id);
-            if ($plaqueDetails) {
+            if (isset($plaqueDetailsMap[$id])) {
+                $plaque = $plaqueDetailsMap[$id];
                 // Utiliser le chemin de la miniature enregistrée ou un placeholder
-                $item['details']['thumbnail'] = BASE_URL . ($plaqueDetails['thumbnail_path'] ?? 'assets/images/placeholder-plaque.jpg');
-                $item['details']['format'] = $plaqueDetails['format'];
-                $item['details']['fixation'] = $plaqueDetails['fixation'];
+                $item['details']['thumbnail'] = BASE_URL . ($plaque['thumbnail_path'] ?? 'assets/images/placeholder-plaque.jpg');
+                $item['details']['format'] = $plaque['format'];
+                $item['details']['fixation'] = $plaque['fixation'];
+                $item['details']['text_content'] = $plaque['text_content']; // Ajouter pour affichage si besoin
+                // Décoder image_uploads pour affichage si nécessaire, s'il a été stocké en JSON
+                $item['details']['image_uploads'] = json_decode($plaque['image_uploads'] ?? '[]', true); 
+            } else {
+                // Gérer le cas où la plaque n'est pas trouvée (par exemple, si elle a été supprimée de la BDD)
+                // Ici, on utilise des valeurs par défaut
+                $item['details']['thumbnail'] = BASE_URL . 'assets/images/placeholder-plaque.jpg';
+                $item['details']['format'] = 'N/A';
+                $item['details']['fixation'] = 'N/A';
+                $item['details']['text_content'] = 'Plaque personnalisée introuvable';
+                $item['details']['image_uploads'] = [];
             }
         }
         unset($item); // Rompre la référence sur le dernier élément
@@ -40,7 +66,7 @@ class PanierController {
         global $page_title, $page_description;
         $page_title = $data['page_title'];
         $page_description = $data['page_description'];
-        render('panier', $data); // CHANGEMENT ICI: 'page_panier' devient 'panier'
+        render('panier', $data);
     }
 
     public function addToCart() {
@@ -51,48 +77,49 @@ class PanierController {
             $price = floatval($_POST['price'] ?? 175);
             $thumbnailPath = sanitize_input($_POST['thumbnail_path'] ?? null);
 
-            // CORRECTED: Retrieve and decode the full Fabric.js objects data
+            // CORRECTION: Récupérer et décoder l'ensemble des données Fabric.js
             $fabricObjectsDataJson = $_POST['fabric_objects_data'] ?? '[]';
             $fabricObjectsData = json_decode($fabricObjectsDataJson, true);
 
-            // Extract text content and image uploads from the decoded Fabric.js data
+            // Extraire le contenu texte et les chemins d'images des données Fabric.js décodées
             $textContent = '';
             $imageUploads = [];
 
             foreach ($fabricObjectsData as $obj) {
                 if ($obj['type'] === 'i-text' && isset($obj['text'])) {
-                    $textContent .= $obj['text'] . "\n"; // Concatenate text from all text objects
+                    $textContent .= $obj['text'] . "\n"; // Concaténer le texte de tous les objets texte
                 } elseif ($obj['type'] === 'image' && isset($obj['src'])) {
-                    // Store image paths. Remove BASE_URL from the path if present.
+                    // Stocker les chemins d'images. Supprimer BASE_URL du chemin si présent.
+                    // IMPORTANT: Assurez-vous que les chemins stockés sont relatifs à la racine du site
                     $imageUploads[] = str_replace(BASE_URL, '', $obj['src']);
                 }
             }
-            $textContent = trim($textContent); // Clean up leading/trailing whitespace
+            $textContent = trim($textContent); // Nettoyer les espaces en début/fin
 
-            // Save the custom plaque details into the database and get its ID
+            // Enregistrer la plaque personnalisée dans la BDD et obtenir son ID
             $productModel = new Product();
             $customizationId = $productModel->saveCustomPlaque([
                 'format' => $format,
                 'fixation' => $fixation,
                 'background_image' => $background,
-                'text_content' => $textContent, // Now correctly populated from fabricObjectsData
-                'image_uploads' => $imageUploads, // Now correctly populated from fabricObjectsData
+                'text_content' => $textContent, // Correctement rempli à partir de fabricObjectsData
+                'image_uploads' => json_encode($imageUploads), // Encodé en JSON pour le stockage
                 'price' => $price,
                 'thumbnail_path' => $thumbnailPath
             ]);
 
-            // Add the plaque to the cart session
+            // Ajouter la plaque au panier
             Cart::addToCart($customizationId, $price, [
                 'format' => $format,
                 'fixation' => $fixation,
                 'thumbnail' => $thumbnailPath ? (BASE_URL . $thumbnailPath) : (BASE_URL . 'assets/images/placeholder-plaque.jpg')
             ]);
 
-            // Redirect to the cart page
+            // Rediriger vers le panier
             header('Location: ' . BASE_URL . 'panier');
             exit();
         }
-        header('Location: ' . BASE_URL . 'boutique'); // Redirect if accessed directly or via wrong method
+        header('Location: ' . BASE_URL . 'boutique'); // Rediriger si accès direct
         exit();
     }
 

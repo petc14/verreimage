@@ -1,86 +1,129 @@
 <?php
 // config/init.php
 
+// Démarrer la session en tout début
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-date_default_timezone_set('Europe/Paris');
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-// Définition des chemins absolus
+// Chemin racine du projet
 define('ROOT_PATH', dirname(__DIR__));
-define('PUBLIC_PATH', ROOT_PATH . '/public');
-define('SRC_PATH', ROOT_PATH . '/src');
-define('CONTROLLERS_PATH', SRC_PATH . '/Controllers');
-define('MODELS_PATH', SRC_PATH . '/Models');
-define('VIEWS_PATH', ROOT_PATH . '/views');
-define('ASSETS_PATH', PUBLIC_PATH . '/assets');
-define('VENDOR_PATH', ROOT_PATH . '/vendor');
 
-// Charge l'autoloader de Composer s'il existe
-if (file_exists(VENDOR_PATH . '/autoload.php')) {
-    require_once VENDOR_PATH . '/autoload.php';
-}
+// URL de base du site
+// IMPORTANT : À MODIFIER POUR L'URL DE VOTRE SITE EN PRODUCTION !
+define('BASE_URL', 'http://localhost/verre-image-site/public/');
 
-// Constantes du site
-define('SITE_NAME', 'Verre & Image');
-define('BASE_URL', 'http://localhost/verre-image-site/public/'); // IMPORTANT: Mettre à jour pour votre environnement
-
-// Autoloading corrigé pour nos classes avec namespaces
+// Autoloading des classes
 spl_autoload_register(function ($class) {
-    // Bases de répertoires pour les namespaces
-    $map = [
-        'Models\\' => MODELS_PATH . '/',
-        'Controllers\\' => CONTROLLERS_PATH . '/',
+    // Convertit le namespace en chemin de fichier
+    $prefixes = [
+        'Models\\' => ROOT_PATH . '/src/Models/',
+        'Controllers\\' => ROOT_PATH . '/src/Controllers/'
     ];
 
-    foreach ($map as $prefix => $base_dir) {
+    foreach ($prefixes as $prefix => $base_dir) {
         $len = strlen($prefix);
-        if (strncmp($prefix, $class, $len) !== 0) {
-            continue;
+        if (strncmp($prefix, $class, $len) === 0) {
+            $relative_class = substr($class, $len);
+            $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+            if (file_exists($file)) {
+                require_once $file;
+                return; // Classe trouvée, arrêter l'autoloading
+            }
         }
-
-        $relative = substr($class, $len);
-        $file = $base_dir . str_replace('\\', DIRECTORY_SEPARATOR, $relative) . '.php';
-
-        if (is_file($file)) {
-            require_once $file;
-            return;
-        }
+    }
+    
+    // Inclure vendor/autoload.php si Composer est utilisé
+    // Assurez-vous que ce fichier existe si vous utilisez Composer pour des dépendances
+    if (file_exists(ROOT_PATH . '/vendor/autoload.php')) {
+        require_once ROOT_PATH . '/vendor/autoload.php';
     }
 });
 
-// Connexion à la base de données via le modèle Database
+// Gestion des erreurs
+// Pour le développement :
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+// POUR LA PRODUCTION, DÉCOMMENTER CES LIGNES et COMMENTER LES PRÉCÉDENTES :
+/*
+ini_set('display_errors', 0); // Ne pas afficher les erreurs aux utilisateurs
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING); // Affiche toutes les erreurs sauf Notices et Warnings pour le journal
+ini_set('log_errors', 1); // Active la journalisation des erreurs
+ini_set('error_log', ROOT_PATH . '/logs/php_errors.log'); // Spécifie le fichier de log
+// Assurez-vous que le dossier 'logs' existe à la racine et est inscriptible par le serveur web
+*/
+
+
+// Connexion à la base de données
 try {
     \Models\Database::connect(
-        'localhost', // DB_SERVER
-        'root',      // DB_USERNAME
-        '',          // DB_PASSWORD
-        'verre_image_db' // DB_NAME
+        'mysql', // DB_CONNECTION
+        'localhost', // DB_HOST
+        'verre_image', // DB_DATABASE
+        'root', // DB_USERNAME
+        '' // DB_PASSWORD
     );
 } catch (PDOException $e) {
-    die("ERREUR : Impossible de se connecter à la base de données. " . $e->getMessage());
+    // GESTION D'ERREUR ROBUSTE POUR LA CONNEXION À LA BDD
+    error_log('Erreur de connexion à la base de données: ' . $e->getMessage()); // Journaliser l'erreur
+
+    // Afficher un message générique à l'utilisateur et arrêter l'exécution
+    http_response_code(500); // Code de statut HTTP 500 (Internal Server Error)
+    echo '<!DOCTYPE html>
+          <html lang="fr">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Erreur de service</title>
+              <style>
+                  body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+                  .container { max-width: 800px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+                  h1 { color: #d33; }
+              </style>
+          </head>
+          <body>
+              <div class="container">
+                  <h1>Oups ! Une erreur est survenue.</h1>
+                  <p>Nous rencontrons des difficultés techniques. Veuillez réessayer ultérieurement.</p>
+                  <p>Si le problème persiste, veuillez nous contacter.</p>
+              </div>
+          </body>
+          </html>';
+    exit(); // Arrêter l'exécution du script
 }
 
-// Initialisation du panier (nécessite la session démarrée)
+// Initialisation du panier
 \Models\Cart::initCart();
 
-// Fonctions utilitaires globales
-// Moved into Helpers or specific classes in a real MVC.
-// For now, keeping a simplified function set.
-if (!function_exists('format_price')) {
-    function format_price(float $price): string {
-        return number_format($price, 2, ',', ' ') . ' €';
-    }
+// Fonction d'aide pour le rendu des vues
+function render($view, $data = []) {
+    // Permet d'accéder aux variables du tableau $data directement par leur nom dans la vue
+    // Attention: extract peut créer des collisions de noms de variables. Pour un projet plus grand,
+    // il est souvent préférable d'accéder aux variables via $data['nom_variable'].
+    extract($data);
+    require_once ROOT_PATH . '/Views/layouts/header.php';
+    require_once ROOT_PATH . '/Views/' . $view . '.php';
+    require_once ROOT_PATH . '/Views/layouts/footer.php';
 }
 
-if (!function_exists('sanitize_input')) {
-    function sanitize_input(string $data): string {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
-        return $data;
+function renderConfigurator($view, $data = []) {
+    extract($data);
+    require_once ROOT_PATH . '/Views/' . $view . '.php';
+}
+
+// Fonction de nettoyage des entrées (sécurité)
+function sanitize_input($data) {
+    if (is_array($data)) { // Gérer les tableaux récursivement
+        return array_map('sanitize_input', $data);
     }
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+    return $data;
+}
+
+// Fonction de formatage des prix
+function format_price($price) {
+    return number_format($price, 2, ',', ' ') . ' €';
 }
